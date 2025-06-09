@@ -1,10 +1,10 @@
 package com.example.samuraitravel.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,12 +26,12 @@ public class AdminHouseController {
 //	}
 	
 	@GetMapping
-	public String index(Model model, Pageable pageable) { //Pageable型引数を指定することで、Pageableオブジェクトを生成し、メソッド内で利用可能となる。
-		
-		List<House> houses = houseRepository.findAll(); //HouseRepositoryインターフェイスのfindByAll()メソッドで全てぼ民宿データを取得する
+	//public String index(Model model, Pageable pageable) { //Pageable型引数を指定することで、Pageableオブジェクトを生成し、メソッド内で利用可能となる。
+	public String index(Model model, @PageableDefault(page=0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable) {
+		//List<House> houses = houseRepository.findAll(); //HouseRepositoryインターフェイスのfindByAll()メソッドで全てぼ民宿データを取得する
 		Page<House> housePages = houseRepository.findAll(pageable);
 		
-		model.addAttribute("houses", houses); //viewへ渡す
+		//model.addAttribute("houses", houses); //viewへ渡す
 		model.addAttribute("housePage", housePages);
 		
 		return "admin/houses/index";
