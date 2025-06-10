@@ -6,11 +6,16 @@ import jakarta.validation.constraints.NotNull;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class HouseRegisterForm {
+@AllArgsConstructor //全フィールドに値をセットするための引数つきコンストラクタを自動生成する
+public class HouseEditForm {
 
+	@NotNull
+	private Integer id;
+	
 	@NotBlank(message = "民宿名を入力してください。")
 	private String name;
 	

@@ -55,6 +55,11 @@
 							<a th:href="@{/admin/houses/register}" class="btn text-white shadow-sm mb-3 moattravel-btn">登録</a>
 
 						</div>
+						
+						<!--登録完了アラート-->
+						<div th:if="${successMessage}" class="alert alert-info">
+							<span th:text="${successMessage}"></span>
+						</div>
 
 						<!--検索結果表示画面-->
 						<table class="table">
