@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!--各民宿の詳細ページ-->
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Bootstrap -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<!-- Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+
+
+
+	<title>民宿詳細</title>
+</head>
+
+<body>
+
+	<!--ページ全体のレイアウト-->
+	<div class="moattravel-wrapper">
+
+
+		<!-- ヘッダー -->
+
+		<!--ナビゲーションバーのスタイル-->
+		<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm moattravel-navbar">
+
+			<!--ヘッダーロゴ-->
+			<div class="container moattravel-container">
+
+				<!--ヘッダーロゴのリンク-->
+				<a class="navbar-brand" th:href="@{/}">
+
+					<!--ヘッダーロゴ画像-->
+					<img class="moattravel-logo me-1" th:src="@{/images/logo.png}" alt="Samurai Travel">
+
+				</a>
+
+			</div>
+
+		</nav>
+
+
+		<!--メインコンテンツ-->
+		<main>
+
+			<!--メインコンテンツのレイアウト-->
+			<div class="container pt-4 pb-5 moattravel-container">
+				<div class="row justify-content-center">
+					<div class="col-xl-5 col-lg-6 col-md-8">
+
+
+						<!--パンくずリストレイアウト-->
+						<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+
+							<!--リスト-->
+							<ol class="breadcrumb mb-0">
+
+								<li class="breadcrumb-item"><a th:href="@{/admin/houses}">民宿一覧</a></li>
+								<li class="breadcrumb-item active" aria-current="page">民宿詳細</li>
+
+							</ol>
+
+						</nav>
+
+						<!--民宿名-->
+						<h1 class="mb-4 text-center" th:text="${house.getName()}"></h1>
+
+						<!--編集ボタン-->
+						<div class="d-flex justify-content-end align-items-end mb-3">
+							<div>
+								<a href="#">編集</a>
+							</div>
+						</div>
+
+						<!--民宿TOP画像表示(imageがなければ"NO IMAGE"画像を表示)-->
+						<div class="mb-3">
+							<img th:if="${house.getImageName()}" th:src="@{/storage/__${house.getImageName()}__}"
+								class="w-100" alt="民宿画像">
+							<img th:unless="${house.getImageName()}" th:src="@{/images/noImage.png}" class="w-100"
+								alt="NO IMAGE">
+						</div>
+
+						<!--民宿詳細欄のレイアウト-->
+						<div class="container mb-4">
+
+
+							<!--ID欄のレイアウト-->
+							<div class="row pb-2 mb-2 border-bottom">
+								<div class="col-4">
+									<span class="fw-bold">ID</span>
+								</div>
+								<div class="col">
+									<span th:text="${house.getId()}"></span>
+								</div>
+							</div>
+
+
+							<!--民宿名欄のレイアウト-->
+							<div class="row pb-2 mb-2 border-bottom">
+								<div class="col-4">
+									<span class="fw-bold">民宿名</span>
+								</div>
+								<div class="col">
+									<span th:text="${house.getName()}"></span>
+								</div>
+							</div>
+
+							<!--説明欄のレイアウト-->
+							<div class="row pb-2 mb-2 border-bottom">
+								<div class="col-4">
+									<span class="fw-bold">説明</span>
+								</div>
+								<div class="col">
+									<span class="moattravel-pre-wrap" th:text="${house.getDescription()}"></span>
+								</div>
+							</div>
+
+							<!--宿泊料金欄のレイアウト-->
+							<div class="row pb-2 mb-2 border-bottom">
+								<div class="col-4">
+									<span class="fw-bold">宿泊料金</span>
+								</div>
+								<div class="col">
+									<span th:text="${#numbers.formatInteger(house.getPrice(), 1, 'COMMA') + '円'}"></span>
+								</div>
+							</div>
+							
+
+							<!--定員欄のレイアウト-->
+							<div class="row pb-2 mb-2 border-bottom">
+								<div class="col-4">
+									<span class="fw-bold">定員</span>
+								</div>
+								<div class="col">
+									<span th:text="${house.getCapacity() + '人'}"></span>
+								</div>
+							</div>
+		
+							<!--郵便番号欄のレイアウト-->
+							<div class="row pb-2 mb-2 border-bottom">
+								<div class="col-4">
+									<span class="fw-bold">郵便番号</span>
+								</div>
+								<div class="col">
+									<span th:text="${house.getPostalCode()}"></span>
+								</div>
+							</div>
+							
+							<!--住所欄のレイアウト-->
+							<div class="row pb-2 mb-2 border-bottom">
+								<div class="col-4">
+									<span class="fw-bold">住所</span>
+								</div>
+								<div class="col">
+									<span th:text="${house.getAddress()}"></span>
+								</div>
+							</div>
+							
+							<!--電話番号欄のレイアウト-->
+							<div class="row pb-2 mb-2 border-bottom">
+								<div class="col-4">
+									<span class="fw-bold">電話番号</span>
+								</div>
+								<div class="col">
+									<span th:text="${house.getPhoneNumber()}"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+
+	<!-- フッター -->
+	<footer>
+		<div class="d-flex justify-content-center align-items-center h-100">
+			<p class="text-center text-muted small mb-0">&copy; Samurai Travel All rights reserved.</p>
+		</div>
+	</footer>
+	</div>
+
+	<!-- Bootstrap -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
