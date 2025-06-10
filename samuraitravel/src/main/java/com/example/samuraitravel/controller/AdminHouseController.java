@@ -69,7 +69,7 @@ public class AdminHouseController {
 	}
 	
 	@GetMapping("/register")
-	public String register(@ModelAttribute HouseRegisterForm form) {
+	public String register(@ModelAttribute HouseRegisterForm hauseRegisterForm) {
 		return "admin/houses/register";
 	}
 	
