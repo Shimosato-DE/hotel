@@ -8,11 +8,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.samuraitravel.entity.House;
+import com.example.samuraitravel.form.HouseRegisterForm;
 import com.example.samuraitravel.repository.HouseRepository;
 
 
@@ -21,7 +23,7 @@ import com.example.samuraitravel.repository.HouseRepository;
 public class AdminHouseController {
 	
 	@Autowired
-	private HouseRepository houseRepository;//コンストラクタインジェクションを行う(ここではAutowiredアノテーションにより省略)
+	private HouseRepository houseRepository;//コンストラクタインジェクションを行う
 	
 //	public AdminHouseController(HouseRepository houseRepository) {
 //		this.houseRepository = houseRepository;
@@ -35,6 +37,7 @@ public class AdminHouseController {
 //	}
 	
 	//GETリクエスト(/admin/houses)を受取、民宿一覧及び検索、登録画面を返す
+	
 	@GetMapping
 	public String index(Model model, @PageableDefault(page=0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable, @RequestParam(name = "keyword", required = false) String keyword) {
 		
@@ -52,13 +55,22 @@ public class AdminHouseController {
 		return "admin/houses/index";
 	}
 	
+	
+	
+	
 	//一覧ページから/{id}を受取、各民宿の詳細ページを返す
+	
 	@GetMapping("/{id}")
 	public String show(@PathVariable(name = "id") Integer id, Model model) { //@PathVariable:name属性にバインドさせたいURLの{}内の文字列を指定。
 		House house = houseRepository.getReferenceById(id); //getReferenceById(id):引数idと一致するデータを取得する
 		model.addAttribute("house", house);
 		
 		return "admin/houses/show";
+	}
+	
+	@GetMapping("/register")
+	public String register(@ModelAttribute HouseRegisterForm form) {
+		return "admin/houses/register";
 	}
 	
 }

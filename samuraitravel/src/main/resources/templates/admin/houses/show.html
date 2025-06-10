@@ -3,18 +3,10 @@
 <html xmlns:th="https://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Bootstrap -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-	<!-- Google Fonts -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
-
-
-
+	<!-- metaフラグメント -->
+	<div th:replace="~{fragment :: meta}"></div>
+	<!-- linkフラグメント -->
+	<div th:replace="~{fragment :: styles}"></div>
 	<title>民宿詳細</title>
 </head>
 
@@ -25,24 +17,7 @@
 
 
 		<!-- ヘッダー -->
-
-		<!--ナビゲーションバーのスタイル-->
-		<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm moattravel-navbar">
-
-			<!--ヘッダーロゴ-->
-			<div class="container moattravel-container">
-
-				<!--ヘッダーロゴのリンク-->
-				<a class="navbar-brand" th:href="@{/}">
-
-					<!--ヘッダーロゴ画像-->
-					<img class="moattravel-logo me-1" th:src="@{/images/logo.png}" alt="Samurai Travel">
-
-				</a>
-
-			</div>
-
-		</nav>
+		<div th:replace="~{fragment :: header}"></div>
 
 
 		<!--メインコンテンツ-->
@@ -126,10 +101,11 @@
 									<span class="fw-bold">宿泊料金</span>
 								</div>
 								<div class="col">
-									<span th:text="${#numbers.formatInteger(house.getPrice(), 1, 'COMMA') + '円'}"></span>
+									<span
+										th:text="${#numbers.formatInteger(house.getPrice(), 1, 'COMMA') + '円'}"></span>
 								</div>
 							</div>
-							
+
 
 							<!--定員欄のレイアウト-->
 							<div class="row pb-2 mb-2 border-bottom">
@@ -140,7 +116,7 @@
 									<span th:text="${house.getCapacity() + '人'}"></span>
 								</div>
 							</div>
-		
+
 							<!--郵便番号欄のレイアウト-->
 							<div class="row pb-2 mb-2 border-bottom">
 								<div class="col-4">
@@ -150,7 +126,7 @@
 									<span th:text="${house.getPostalCode()}"></span>
 								</div>
 							</div>
-							
+
 							<!--住所欄のレイアウト-->
 							<div class="row pb-2 mb-2 border-bottom">
 								<div class="col-4">
@@ -160,7 +136,7 @@
 									<span th:text="${house.getAddress()}"></span>
 								</div>
 							</div>
-							
+
 							<!--電話番号欄のレイアウト-->
 							<div class="row pb-2 mb-2 border-bottom">
 								<div class="col-4">
@@ -177,18 +153,12 @@
 		</main>
 
 
-	<!-- フッター -->
-	<footer>
-		<div class="d-flex justify-content-center align-items-center h-100">
-			<p class="text-center text-muted small mb-0">&copy; Samurai Travel All rights reserved.</p>
-		</div>
-	</footer>
+		<!-- フッター -->
+		<div th:replace="~{fragment :: footer}"></div>
 	</div>
 
 	<!-- Bootstrap -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-		crossorigin="anonymous"></script>
+	<div th:replace="~{fragment :: scripts}"></div>
 </body>
 
 </html>
