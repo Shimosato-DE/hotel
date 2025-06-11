@@ -28,14 +28,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		try {
 			
-			User user = userRepository.findByEmail(email);
-			String userRoleName = user.getRole().getName();
+			User user = userRepository.findByEmail(email);//emailを引数として受取、findByEmailの呼び出し結果をuserに格納
+			String userRoleName = user.getRole().getName();//userのロールを取得し、関連づいているロールオブジェクトのnameフィールドを取得。
 			
-			Collection<GrantedAuthority> authorities = new ArrayList<>();
+			Collection<GrantedAuthority> authorities = new ArrayList<>();//権限情報を格納するListを生成
 			
-			authorities.add(new SimpleGrantedAuthority(userRoleName));
+			authorities.add(new SimpleGrantedAuthority(userRoleName));//取得したユーザのロール名を元にSimpleGrantedAuthorityインスタンスの生成。これにより、Spring Security はこのユーザーがどの役割を持っているかを認識できる。
 			
-			return new UserDetailsImpl(user, authorities);
+			return new UserDetailsImpl(user, authorities);//UserDetailsImplにemailとauthorithisの情報を渡してインスタンス生成して返す
 			
 		}catch(Exception e) {
 
