@@ -22,6 +22,9 @@ public class HouseService {
 	@Autowired
 	private HouseRepository houseRepository;
 
+	
+	//新規登録用
+	
 	@Transactional //メソッドをトランザクション化することができる
 	public void create(HouseRegisterForm houseRegisterForm) {
 
@@ -51,6 +54,10 @@ public class HouseService {
 		houseRepository.save(house);//Repository層呼び出しDBへ登録処理
 
 	}
+	
+	
+	
+	//更新用
 	
 	@Transactional
 	public void update(HouseEditForm houseEditForm) {

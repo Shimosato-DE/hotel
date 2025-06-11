@@ -149,4 +149,15 @@ public class AdminHouseController {
 		return "redirect:/admin/houses";
 	}
 	
+	
+	@PostMapping("/{id}/delete")
+	public String delete(@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes) {
+		
+		houseRepository.deleteById(id);
+		
+		redirectAttributes.addFlashAttribute("successMessage", "民宿を削除しました。");
+		
+		return "redirect:/admin/houses";
+	}
+	
 }
