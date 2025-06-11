@@ -5,15 +5,29 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.example.samuraitravel.repository.UserRepository;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class WebSecurityConfig {
 
+	private final UserRepository userRepository;
+	    
+	    public WebSecurityConfig(UserRepository userRepository) {
+	        this.userRepository = userRepository;
+	    }
+	    
+	    // UserDetailsServiceをBeanとして登録
+	    @Bean
+	    public UserDetailsService userDetailsService() {
+	        return new UserDetailsServiceImpl(userRepository);
+	 }
 	
 	//ページへのアクセス許可設定
 	@Bean
@@ -21,7 +35,7 @@ public class WebSecurityConfig {
 		
 		http
 			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/css/**", "/image/**", "/js/**", "/storage/**", "/").permitAll()  // すべてのユーザーにアクセスを許可するURL
+				.requestMatchers("/css/**", "/image/**", "/js/**", "/storage/**", "/", "/signup", "/login").permitAll()  // すべてのユーザーにアクセスを許可するURL
 				.requestMatchers("/admin/**").hasRole("ADMIN") // 管理者にのみアクセスを許可するURL
 				.anyRequest().authenticated()
 			) //上記以外のURLはログインが必要（会員または管理者のどちらでもOK）

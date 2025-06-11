@@ -7,10 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.samuraitravel.entity.User;
 
+//@Service
 public class UserDetailsImpl implements UserDetails {
 
 	private final User user;
-
 	private final Collection<GrantedAuthority> authorities;
 
 	public UserDetailsImpl(User user, Collection<GrantedAuthority> authorities) {
@@ -47,7 +47,7 @@ public class UserDetailsImpl implements UserDetails {
 	}
 
 	// ユーザーがロックされていなければtrueを返す
-	public boolean isAccoutNonLocked() {
+	public boolean isAccountNonLocked() {
 		return true;
 	}
 
