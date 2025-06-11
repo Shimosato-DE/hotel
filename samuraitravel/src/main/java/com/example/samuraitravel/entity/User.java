@@ -11,12 +11,20 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import lombok.Data;
 
 @Entity
 @Table(name = "users")
 @Data
 public class User {
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	 
+	//user.setPassword(passwordEncoder.encode(form.getPassword())); // ←ここが重要
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

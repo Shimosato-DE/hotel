@@ -24,7 +24,23 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 	
 	@Override
-	public UserDetails loadUserByUsername(String email) { //throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+	    User user = userRepository.findByEmail(email);
+	           // .orElseThrow(() -> new UsernameNotFoundException("ユーザーが見つかりませんでした。"));
+	 
+	    String userRoleName = user.getRole().getName();
+	 
+	    Collection<GrantedAuthority> authorities = new ArrayList<>();
+	    authorities.add(new SimpleGrantedAuthority("ROLE_" + userRoleName)); 
+	 
+	    return new UserDetailsImpl(user, authorities);
+	}
+	
+}
+
+	/*
+	
+	public UserDetails loadUserByUsername(String email) {
 		
 		try {
 			
@@ -51,4 +67,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //Spring Securityが提供するUserDetailsServiceインターフェースを実装したサービスクラス
 //クラス内ではloadUserByUsername()メソッドを1つだけ定義する
 //loadUserByUsername()メソッドはユーザー情報を取得したり、UserDetailsImplクラスのインスタンスを生成したりするなど、ビジネスロジックを担当する
+
+
+*/
 
