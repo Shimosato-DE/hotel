@@ -23,8 +23,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		this.userRepository = userRepository;
 	}
 	
-	
-	
 	@Override
 	public UserDetails loadUserByUsername(String email) { //throws UsernameNotFoundException {
 		
@@ -47,3 +45,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 	
 }
+
+
+//UserDetailsServiceImplクラス
+//Spring Securityが提供するUserDetailsServiceインターフェースを実装したサービスクラス
+//クラス内ではloadUserByUsername()メソッドを1つだけ定義する
+//loadUserByUsername()メソッドはユーザー情報を取得したり、UserDetailsImplクラスのインスタンスを生成したりするなど、ビジネスロジックを担当する
+

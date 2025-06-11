@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.samuraitravel.entity.User;
 
-//@Service
+
 public class UserDetailsImpl implements UserDetails {
 
 	private final User user;
@@ -62,3 +62,10 @@ public class UserDetailsImpl implements UserDetails {
 	}
 
 }
+
+
+//UserDetailsImplクラス
+//SpringSecurityが提供するUserDetailsインターフェースを実装したクラス
+//ユーザー名（メールアドレス）やパスワード、ロールなどのユーザー情報を保持する
+//Spring SecurityはこのUserDetailsオブジェクトを利用して認証や認可を行う
+

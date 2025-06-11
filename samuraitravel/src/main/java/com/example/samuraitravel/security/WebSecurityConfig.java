@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -22,12 +21,12 @@ public class WebSecurityConfig {
 	    public WebSecurityConfig(UserRepository userRepository) {
 	        this.userRepository = userRepository;
 	    }
-	    
-	    // UserDetailsServiceをBeanとして登録
-	    @Bean
-	    public UserDetailsService userDetailsService() {
-	        return new UserDetailsServiceImpl(userRepository);
-	 }
+//	    
+//	    // UserDetailsServiceをBeanとして登録
+//	    @Bean
+//	    public UserDetailsService userDetailsService() {
+//	        return new UserDetailsServiceImpl(userRepository);
+//	 }
 	
 	//ページへのアクセス許可設定
 	@Bean
@@ -65,3 +64,14 @@ public class WebSecurityConfig {
 		return new BCryptPasswordEncoder(); //BCryptはパスワード用のハッシュ値を生成してくれる強力なハッシュアルゴリズム
 	}
 }
+
+
+
+//WebSecurityConfigクラス
+//以下のようなSpring Securityの設定を行うためのクラス
+//誰に、どのページへのアクセスを許可するか
+//ログインページのURL
+//ログインフォームの送信先URL
+//ログイン成功時または失敗時のリダイレクト先URL
+//ログアウト時のリダイレクト先URL
+//PasswordEncoderインターフェースを利用したパスワードのハッシュアルゴリズム（ハッシュ化のルール）の設定もここで行う
