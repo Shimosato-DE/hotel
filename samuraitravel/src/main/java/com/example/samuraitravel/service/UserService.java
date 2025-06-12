@@ -37,7 +37,7 @@ public class UserService {
 		user.setEmail(signupForm.getEmail());
 		user.setPassword(passwordEncoder.encode(signupForm.getPassword()));//パスワードはハッシュ化してからセットする
 		user.setRole(role);
-		user.setEnabled(false);
+		user.setEnabled(false);//メール認証前のためfalseで登録
 		//DBへ登録
 		return userRepository.save(user);
 	}

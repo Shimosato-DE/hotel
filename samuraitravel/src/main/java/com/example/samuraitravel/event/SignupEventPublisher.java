@@ -15,8 +15,11 @@ public class SignupEventPublisher {
 		this.applicationEventPublisher = applicationEventPublisher;
 	}
 
-	public void publishSignupEvent(User user, String requestUrl) {
-		applicationEventPublisher.publishEvent(new SignupEvent(this, user, requestUrl));//引数には発行したいEventクラス（今回はSignupEventクラス）のインスタンスを渡しす
+	public void publishSignupEvent(User user, String requestUrl) {//signupが完了したUserオブジェクトと認証リンクを受け取る
+		
+		applicationEventPublisher.publishEvent(new SignupEvent(this, user, requestUrl));
+		//SignupEventにはサインアップしたUserオブジェクトとリクエストのURLが含まれ生成される。
+		//引数には発行したいEventクラス（今回はSignupEventクラス）のインスタンスを渡す
 	}
 
 }
