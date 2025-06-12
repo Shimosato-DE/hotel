@@ -91,7 +91,7 @@ public class AuthController {
 
 		}
 
-		userService.create(signupForm);
+		//userService.create(signupForm);
 		//redirectAttributes.addFlashAttribute("successMessage", "会員登録が完了しました");
 
 		User createdUser = userService.create(signupForm); //DBへfalseで登録し結果を格納
