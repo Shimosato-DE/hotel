@@ -16,6 +16,7 @@ public class VerificationTokenService {
 		this.verificationTokenRepository = verificationTokenRepository;
 	}
 	
+	//ユーザに紐づくトークンの登録
 	@Transactional
 	public void create(User user, String token) {
 		VerificationToken verificationToken = new VerificationToken();

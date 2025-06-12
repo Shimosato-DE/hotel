@@ -6,6 +6,8 @@ import com.example.samuraitravel.entity.User;
 
 import lombok.Getter;
 
+
+//Listenerクラスにイベントが発生したことを知らせるクラス
 @Getter
 public class SignupEvent extends ApplicationEvent { //イベントのソース（発生源）などを保持するクラス
 
