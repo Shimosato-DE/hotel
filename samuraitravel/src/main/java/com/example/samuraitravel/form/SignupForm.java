@@ -21,6 +21,9 @@ public class SignupForm {
 
 	@NotBlank(message = "住所を入力してください")
 	private String address;
+	
+	@NotBlank(message = "電話番号を入力してください")
+	private String phoneNumber;
 
 	@NotBlank(message = "メールアドレスを入力してください。")
 	@Email(message = "メールアドレスは正しい形式で入力してください。")
