@@ -1,5 +1,7 @@
 package com.example.samuraitravel.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +20,6 @@ import com.example.samuraitravel.form.SignupForm;
 import com.example.samuraitravel.service.UserService;
 import com.example.samuraitravel.service.VerificationTokenService;
 
-
 //ログイン画面
 @Controller
 public class AuthController {
@@ -26,12 +27,14 @@ public class AuthController {
 	private final UserService userService;
 	private final SignupEventPublisher signupEventPublisher;
 	private final VerificationTokenService verificationTokenService;
+	private final HttpServletRequest httpServletRequest;
 
 	public AuthController(UserService userService, SignupEventPublisher signupEventPublisher,
-			VerificationTokenService verificationTokenService) {
+			VerificationTokenService verificationTokenService, HttpServletRequest httpServletRequest) {
 		this.userService = userService;
 		this.signupEventPublisher = signupEventPublisher;
 		this.verificationTokenService = verificationTokenService;
+		this.httpServletRequest = httpServletRequest;
 	}
 
 	@GetMapping("/login")
