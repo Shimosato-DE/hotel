@@ -16,4 +16,19 @@ public interface HouseRepository extends JpaRepository<House, Integer>{ //エン
 	public Page<House> findByAddressLike(String area, Pageable pageable);
 	
 	public Page<House> findByPriceLessThanEqual(Integer price, Pageable pageable);
+	
+	public Page<House> findByNameLikeOrAddressLikeOrderByCreateAtDesc(String nameKeyword, String addressKeyword, Pageable pageable);
+	
+	public Page<House> findByNameLikeOrAddressLikeOrderByPriceAsc(String nameKeyword, String AddressKeyword, Pageable pageable);
+	
+	public Page<House> findByAddressLikeOrderByCreatedAtDesc(String area, Pageable pageable);
+	
+	public Page<House> findBypriceLessThanEqualOrderByCreatedAtDesc(Integer price, Pageable pageable);
+	
+	public Page<House> findByPriceLessThanEqualOrderByPriceAsc(Integer price, Pageable pageable);
+
+	public Page<House> findAllByOrderByCreatedAtDesc(Pageable pageable);
+	
+	public Page<House> findAllByOrderByPriceAsc(Pageable pageable);
+	
 }
