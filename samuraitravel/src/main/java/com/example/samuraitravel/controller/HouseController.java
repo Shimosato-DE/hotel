@@ -18,43 +18,76 @@ import com.example.samuraitravel.repository.HouseRepository;
 public class HouseController {
 
 	private final HouseRepository houseRepository;
-	
+
 	public HouseController(HouseRepository houseRepository) {
 		this.houseRepository = houseRepository;
 	}
-	
+
 	@GetMapping
 	public String index(@RequestParam(name = "keyword", required = false) String keyword,
-						@RequestParam(name = "area", required = false) String area,
-						@RequestParam(name = "price", required = false) Integer price,
-						@RequestParam(name = "order", required = false) String order,
-						@PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable, Model model) {
-		
+			@RequestParam(name = "area", required = false) String area,
+			@RequestParam(name = "price", required = false) Integer price,
+			@RequestParam(name = "order", required = false) String order,
+			@PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable,
+			Model model) {
+
 		Page<House> housePage;
-		
-		if(keyword != null && !keyword.isEmpty()) {
-			
+
+		if (keyword != null && !keyword.isEmpty()) {
+
 			housePage = houseRepository.findByNameLikeOrAddressLike("%" + keyword + "%", "%" + keyword + "%", pageable);
-				if(order != null && order.equals("priceAsc")) {
-					housePage = houseRepository.findByNameLikeOrAddressLikeOrderByPriceAsc("%" + keyword + "%", "%" + keyword + "%", pageable);
-				}
-		}else if(area != null && !area.isEmpty()) {
+
+			if (order != null && order.equals("priceAsc")) {
+				housePage = houseRepository.findByNameLikeOrAddressLikeOrderByPriceAsc("%" + keyword + "%",
+						"%" + keyword + "%", pageable);
+
+			} else {
+				housePage = houseRepository.findByNameLikeOrAddressLikeOrderByCreatedAtDesc("%" + keyword + "%",
+						"%" + keyword + "%", pageable);
+			}
+
+		} else if (area != null && !area.isEmpty()) {
+
 			housePage = houseRepository.findByAddressLike("%" + area + "%", pageable);
-		}else if(price != null) {
+
+			if (order != null && order.equals("priceAsc")) {
+				housePage = houseRepository.findByAddressLikeOrderByPriceAsc("%" + area + "%", pageable);
+
+			} else {
+				housePage = houseRepository.findByAddressLikeOrderByCreatedAtDesc("%" + area + "%", pageable);
+
+			}
+
+		} else if (price != null) {
+
 			housePage = houseRepository.findByPriceLessThanEqual(price, pageable);
-		}else {
+
+			if (order != null && order.equals("priceAsc")) {
+				housePage = houseRepository.findByPriceLessThanEqualOrderByPriceAsc(price, pageable);
+
+			} else {
+				housePage = houseRepository.findBypriceLessThanEqualOrderByCreatedAtDesc(price, pageable);
+			}
+
+		} else {
+
 			housePage = houseRepository.findAll(pageable);
+
+			if (order != null && order.equals("priceAsc")) {
+				housePage = houseRepository.findAllByOrderByPriceAsc(pageable);
+			} else {
+				housePage = houseRepository.findAllByOrderByCreatedAtDesc(pageable);
+			}
+
 		}
-		
+
 		model.addAttribute("housePage", housePage);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("area", area);
 		model.addAttribute("price", price);
-		
+		model.addAttribute("order", order);
+
 		return "houses/index";
 	}
-	
-	
-
 
 }
