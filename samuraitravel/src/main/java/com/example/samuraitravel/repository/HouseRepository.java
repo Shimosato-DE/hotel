@@ -10,4 +10,8 @@ import com.example.samuraitravel.entity.House;
 public interface HouseRepository extends JpaRepository<House, Integer>{ //エンティティのクラス型と、主キーのデータ型を指定
 	
 	public Page<House> findByNameLike(String keyword, Pageable pageable);
+	
+	public Page<House> findByNameLikeOrAddressLike(String nameKeyword, String addressKeyword, Pageable pageable);
+		
+	public Page<House> findByAddressLike(String area, Pageable pageable);
 }

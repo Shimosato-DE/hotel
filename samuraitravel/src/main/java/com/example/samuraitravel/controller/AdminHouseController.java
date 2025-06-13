@@ -60,10 +60,7 @@ public class AdminHouseController {
 		
 		return "admin/houses/index";
 	}
-	
-	
-	
-	
+
 	
 	
 	

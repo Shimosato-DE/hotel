@@ -68,7 +68,7 @@ public class AuthController {
 			RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
 
 		// メールアドレスが登録済みであれば、BindingResultオブジェクトにエラー内容
-		if (userService.isEmailRegisterd(signupForm.getEmail())) {
+		if (userService.isEmailRegistered(signupForm.getEmail())) {
 
 			//			FieldErrorクラスのコンストラクタに渡す引数は以下のとおり
 			//			第1引数：エラー内容を格納するオブジェクト名
