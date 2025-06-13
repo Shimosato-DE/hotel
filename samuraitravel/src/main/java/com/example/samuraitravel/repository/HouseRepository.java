@@ -14,4 +14,6 @@ public interface HouseRepository extends JpaRepository<House, Integer>{ //エン
 	public Page<House> findByNameLikeOrAddressLike(String nameKeyword, String addressKeyword, Pageable pageable);
 		
 	public Page<House> findByAddressLike(String area, Pageable pageable);
+	
+	public Page<House> findByPriceLessThanEqual(Integer price, Pageable pageable);
 }
