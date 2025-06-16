@@ -22,16 +22,16 @@ import com.example.samuraitravel.service.UserService;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	private final UserService userService;
 	private final UserRepository userRepository;
+	private final UserService userService;
 
-	public UserController(UserService userService, UserRepository userRepository) {
-		this.userService = userService;
+	public UserController(UserRepository userRepository, UserService userService) {
 		this.userRepository = userRepository;
+		this.userService = userService;
 	}
 
 	@GetMapping
-	public String index(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {//@AuthenticationPrincipal：現在ログイン中のユーザ情報を取得できる
+	public String index(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {// @AuthenticationPrincipal：現在ログイン中のユーザ情報を取得できる
 
 		User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
 
@@ -40,49 +40,38 @@ public class UserController {
 		return "user/index";
 	}
 
-	
-	
 	@GetMapping("/edit")
 	public String edit(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
-		
+
 		User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
-		
-		UserEditForm userEditForm = new UserEditForm(
-				user.getId(),
-				user.getName(),
-				user.getFurigana(),
-				user.getPostalCode(),
-				user.getAddress(),
-				user.getPhoneNumber(),
-				user.getEmail());
-		
+
+		UserEditForm userEditForm = new UserEditForm(user.getId(), user.getName(), user.getFurigana(),
+				user.getPostalCode(), user.getAddress(), user.getPhoneNumber(), user.getEmail());
+
 		model.addAttribute("userEditForm", userEditForm);
-		
+
 		return "user/edit";
 	}
-	
-	
-	
-	@PostMapping("/update")
-	public String update(@Validated @ModelAttribute UserEditForm userEditForm, BindingResult result, RedirectAttributes redirectAttributes) {
 
-	// メールアドレスが変更されており、かつ登録済みであれば、BindingResultオブジェクトにエラー内容を追加する
-	if(userService.isEmailChanged(userEditForm) && userService.isEmailRegistered(userEditForm.getEmail())) {
-		
-		FieldError fieldError = new FieldError(result.getObjectName(), "email", "すでに登録済みのメールアドレスです。");
-		result.addError(fieldError);
-		
-		if(result.hasErrors()) {
+	@PostMapping("/update")
+	public String update(@Validated @ModelAttribute UserEditForm userEditForm, BindingResult result,
+			RedirectAttributes redirectAttributes) {
+
+		// メールアドレスが変更されており、かつ登録済みであれば、BindingResultオブジェクトにエラー内容を追加する
+		if (userService.isEmailChanged(userEditForm) && userService.isEmailRegistered(userEditForm.getEmail())) {
+
+			FieldError fieldError = new FieldError(result.getObjectName(), "email", "すでに登録済みのメールアドレスです。");
+			result.addError(fieldError);
+		}
+
+		if (result.hasErrors()) {
 			return "user/edit";
 		}
-		
+
 		userService.update(userEditForm);
-		redirectAttributes.addFlashAttribute("successMessage", "会員登録を編集しました");
-		
-		}
-	
+		redirectAttributes.addFlashAttribute("successMessage", "会員情報を編集しました");
+
 		return "redirect:/user";
 	}
-	
 	
 }

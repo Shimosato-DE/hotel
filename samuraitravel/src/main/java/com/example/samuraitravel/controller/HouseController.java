@@ -37,8 +37,6 @@ public class HouseController {
 
 		if (keyword != null && !keyword.isEmpty()) {
 
-			housePage = houseRepository.findByNameLikeOrAddressLike("%" + keyword + "%", "%" + keyword + "%", pageable);
-
 			if (order != null && order.equals("priceAsc")) {
 				housePage = houseRepository.findByNameLikeOrAddressLikeOrderByPriceAsc("%" + keyword + "%",
 						"%" + keyword + "%", pageable);
@@ -50,8 +48,6 @@ public class HouseController {
 
 		} else if (area != null && !area.isEmpty()) {
 
-			housePage = houseRepository.findByAddressLike("%" + area + "%", pageable);
-
 			if (order != null && order.equals("priceAsc")) {
 				housePage = houseRepository.findByAddressLikeOrderByPriceAsc("%" + area + "%", pageable);
 
@@ -62,18 +58,14 @@ public class HouseController {
 
 		} else if (price != null) {
 
-			housePage = houseRepository.findByPriceLessThanEqual(price, pageable);
-
 			if (order != null && order.equals("priceAsc")) {
 				housePage = houseRepository.findByPriceLessThanEqualOrderByPriceAsc(price, pageable);
 
 			} else {
-				housePage = houseRepository.findBypriceLessThanEqualOrderByCreatedAtDesc(price, pageable);
+				housePage = houseRepository.findByPriceLessThanEqualOrderByCreatedAtDesc(price, pageable);
 			}
 
 		} else {
-
-			housePage = houseRepository.findAll(pageable);
 
 			if (order != null && order.equals("priceAsc")) {
 				housePage = houseRepository.findAllByOrderByPriceAsc(pageable);
@@ -91,14 +83,14 @@ public class HouseController {
 
 		return "houses/index";
 	}
-	
+
 	@GetMapping("/{id}")
 	public String show(@PathVariable(name = "id") Integer id, Model model) {
-		
+
 		House house = houseRepository.getReferenceById(id);
 		model.addAttribute("house", house);
 		model.addAttribute("reservationInputForm", new ReservationInputForm());
-		
+
 		return "houses/show";
 	}
 

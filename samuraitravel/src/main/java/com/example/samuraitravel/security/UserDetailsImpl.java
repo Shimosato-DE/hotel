@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.samuraitravel.entity.User;
 
-
 public class UserDetailsImpl implements UserDetails {
 
 	private final User user;
@@ -35,7 +34,7 @@ public class UserDetailsImpl implements UserDetails {
 		return user.getPassword();
 	}
 
-	//ログイン時に利用するユーザー名（メールアドレス）を返す
+	// ログイン時に利用するユーザー名（メールアドレス）を返す
 	@Override
 	public String getUsername() {
 		return user.getEmail();
@@ -51,21 +50,19 @@ public class UserDetailsImpl implements UserDetails {
 		return true;
 	}
 
-	//ユーザーのパスワードが期限切れでなければtrueを返す
+	// ユーザーのパスワードが期限切れでなければtrueを返す
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
-	
-	 // ユーザーが有効であればtrueを返す
+
+	// ユーザーが有効であればtrueを返す
 	public boolean isEnabled() {
 		return user.getEnabled();
 	}
 
 }
 
-
 //UserDetailsImplクラス
 //SpringSecurityが提供するUserDetailsインターフェースを実装したクラス
 //ユーザー名（メールアドレス）やパスワード、ロールなどのユーザー情報を保持する
 //Spring SecurityはこのUserDetailsオブジェクトを利用して認証や認可を行う
-

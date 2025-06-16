@@ -9,21 +9,21 @@ import com.example.samuraitravel.repository.VerificationTokenRepository;
 
 @Service
 public class VerificationTokenService {
-	
+
 	private final VerificationTokenRepository verificationTokenRepository;
-	
+
 	public VerificationTokenService(VerificationTokenRepository verificationTokenRepository) {
 		this.verificationTokenRepository = verificationTokenRepository;
 	}
-	
-	//ユーザに紐づくトークンの登録
+
+	// ユーザに紐づくトークンの登録
 	@Transactional
 	public void create(User user, String token) {
 		VerificationToken verificationToken = new VerificationToken();
-		
+
 		verificationToken.setUser(user);
 		verificationToken.setToken(token);
-		
+
 		verificationTokenRepository.save(verificationToken);
 	}
 

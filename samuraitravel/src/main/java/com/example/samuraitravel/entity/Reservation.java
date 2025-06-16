@@ -27,7 +27,7 @@ public class Reservation {
 	@ManyToOne
 	@JoinColumn(name = "house_id")
 	private House house;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -49,5 +49,5 @@ public class Reservation {
 
 	@Column(name = "updated_at", insertable = false, updatable = false)
 	private Timestamp updatedAt;
-	
+
 }

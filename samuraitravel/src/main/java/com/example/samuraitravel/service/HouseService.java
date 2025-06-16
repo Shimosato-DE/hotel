@@ -18,23 +18,24 @@ import com.example.samuraitravel.repository.HouseRepository;
 
 @Service
 public class HouseService {
-
-	@Autowired
-	private HouseRepository houseRepository;
-
+	private final HouseRepository houseRepository;
 	
-	//新規登録用
-	
-	@Transactional //メソッドをトランザクション化することができる
+	public HouseService(HouseRepository houseRepository) {
+		this.houseRepository = houseRepository;
+	}
+
+	// 新規登録用
+
+	@Transactional // メソッドをトランザクション化することができる
 	public void create(HouseRegisterForm houseRegisterForm) {
 
-		House house = new House(); //Houseエンティティのインスタンス生成
-		MultipartFile imageFile = houseRegisterForm.getImageFile(); //getを使用して、houseRegisterFormのimageFileを取得し、ここでのimageFile変数に格納
+		House house = new House(); // Houseエンティティのインスタンス生成
+		MultipartFile imageFile = houseRegisterForm.getImageFile(); // getを使用して、houseRegisterFormのimageFileを取得し、ここでのimageFile変数に格納
 
-		if (!imageFile.isEmpty()) { //imgefileが空かどうか判定。↓空の場合、
+		if (!imageFile.isEmpty()) { // imgefileが空かどうか判定。↓空の場合、
 
-			String imageName = imageFile.getOriginalFilename();//imageFileから元のファイル名を取得
-			String hashedImageName = generateNewFileName(imageName);//generateNewFileName()メソッドを呼び出し、hashedImageNameへ格納
+			String imageName = imageFile.getOriginalFilename();// imageFileから元のファイル名を取得
+			String hashedImageName = generateNewFileName(imageName);// generateNewFileName()メソッドを呼び出し、hashedImageNameへ格納
 
 			Path filePath = Paths.get("src/main/resources/static/storage/" + hashedImageName);
 
@@ -42,7 +43,7 @@ public class HouseService {
 			house.setImageName(hashedImageName);
 		}
 
-		//houseRegisterFormから各項目をgetし、houseエンティティへset
+		// houseRegisterFormから各項目をgetし、houseエンティティへset
 		house.setName(houseRegisterForm.getName());
 		house.setDescription(houseRegisterForm.getDescription());
 		house.setPrice(houseRegisterForm.getPrice());
@@ -51,30 +52,28 @@ public class HouseService {
 		house.setAddress(houseRegisterForm.getAddress());
 		house.setPhoneNumber(houseRegisterForm.getPhoneNumber());
 
-		houseRepository.save(house);//Repository層呼び出しDBへ登録処理
+		houseRepository.save(house);// Repository層呼び出しDBへ登録処理
 
 	}
-	
-	
-	
-	//更新用
-	
+
+	// 更新用
+
 	@Transactional
 	public void update(HouseEditForm houseEditForm) {
-		
+
 		House house = houseRepository.getReferenceById(houseEditForm.getId());
 		MultipartFile imageFile = houseEditForm.getImageFile();
-		
-		if(!imageFile.isEmpty()) {
+
+		if (!imageFile.isEmpty()) {
 			String imageName = imageFile.getOriginalFilename();
 			String hashedImageName = generateNewFileName(imageName);
-			
+
 			Path filePath = Paths.get("src/main/resources/static/storage/" + hashedImageName);
-		
+
 			copyImageFile(imageFile, filePath);
-			house.setImageName(hashedImageName);			
+			house.setImageName(hashedImageName);
 		}
-		
+
 		house.setName(houseEditForm.getName());
 		house.setDescription(houseEditForm.getDescription());
 		house.setPrice(houseEditForm.getPrice());
@@ -82,11 +81,9 @@ public class HouseService {
 		house.setPostalCode(houseEditForm.getPostalCode());
 		house.setAddress(houseEditForm.getAddress());
 		house.setPhoneNumber(houseEditForm.getPhoneNumber());
-		house.setName(houseEditForm.getName());
-		
+
 		houseRepository.save(house);
 	}
-	
 
 	// UUIDを使って生成したファイル名を設定
 	public String generateNewFileName(String fileName) {
