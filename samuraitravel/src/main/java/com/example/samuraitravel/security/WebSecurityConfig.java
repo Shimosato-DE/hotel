@@ -31,8 +31,8 @@ public class WebSecurityConfig {
 						.failureUrl("/login?error") // ログイン失敗時のリダイレクト先URL
 						.permitAll())
 				.logout((logout) -> logout.logoutSuccessUrl("/?loggedOut") // ログアウト時のリダイレクト先URL
-						.permitAll())
-				.csrf().ignoringRequestMatchers("/stripe/webhook");
+						.permitAll());
+				http.csrf(csrf -> csrf.ignoringRequestMatchers("/stripe/webhook"));
 
 		return http.build();
 	}

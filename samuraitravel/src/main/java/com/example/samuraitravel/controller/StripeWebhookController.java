@@ -45,10 +45,15 @@ public class StripeWebhookController {
 
 		}
 
+		//checkout.session.completed(決済成功イベント)の場合、
 		if ("checkout.session.completed".equals(event.getType())) {
+		
+			//stripeServicesのprocessSessionCompletedメソッドを呼び出す
+			//引数：StripeのWebhookから送られてきたEventオブジェクト
 			stripeService.processSessionCompleted(event);
 		}
-
+		
+		//すべての処理が成功した場合、Stripeに対してHTTP 200 OKを返す
 		return new ResponseEntity<>("Success", HttpStatus.OK);
 
 	}

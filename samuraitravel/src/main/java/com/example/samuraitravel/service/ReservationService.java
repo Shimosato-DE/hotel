@@ -37,8 +37,8 @@ public class ReservationService {
 
 		House house = houseRepository.getReferenceById(houseId);
 		User user = userRepository.getReferenceById(userId);
-		LocalDate checkinDate = LocalDate.parse(paymentIntentObject.get("checkinDate").trim());
-		LocalDate checkoutDate = LocalDate.parse(paymentIntentObject.get("checkoutDate").trim());
+		LocalDate checkinDate = LocalDate.parse(paymentIntentObject.get("checkinDate"));
+		LocalDate checkoutDate = LocalDate.parse(paymentIntentObject.get("checkoutDate"));
 		Integer numberOfPeople = Integer.valueOf(paymentIntentObject.get("numberOfPeople"));
 		Integer amount = Integer.valueOf(paymentIntentObject.get("amount"));
 
@@ -52,24 +52,6 @@ public class ReservationService {
 		reservationRepository.save(reservation);
 
 	}
-
-//	public void create(ReservationRegisterForm reservationRegisterForm) {
-//		Reservation reservation = new Reservation();
-//		House house = houseRepository.getReferenceById(reservationRegisterForm.getHouseId());
-//		User user = userRepository.getReferenceById(reservationRegisterForm.getUserId());
-//		LocalDate checkinDate = LocalDate.parse(reservationRegisterForm.getCheckinDate().trim());
-//		LocalDate checkoutDate = LocalDate.parse(reservationRegisterForm.getCheckoutDate().trim());
-//		
-//		reservation.setHouse(house);
-//		reservation.setUser(user);
-//		reservation.setCheckinDate(checkinDate);
-//		reservation.setCheckoutDate(checkoutDate);
-//		reservation.setNumberOfPeople(reservationRegisterForm.getNumberOfPeople());
-//		reservation.setAmount(reservationRegisterForm.getAmount());
-//		
-//		reservationRepository.save(reservation);
-//		
-//	}
 
 	// 宿泊人数が定員以下かどうかをチェックする
 	public boolean isWithinCapacity(Integer numberOfPeople, Integer capacity) {
